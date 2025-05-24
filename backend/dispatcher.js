@@ -3,9 +3,9 @@ const mathService = require('./apis/mathService');
 const router = express.Router();
 
 
-router.get('/getFibonacci', (req, res) => {
-    const fibonaci = mathService.getFibonacci();
-    res.json(fibonaci);
+router.get('/getFibonacci', async (req, res) => {
+    const fibonacci = await mathService.getFibonacci(req.query.n);
+    res.json(fibonacci);
 });
 
 module.exports = router;
