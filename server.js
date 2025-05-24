@@ -1,34 +1,14 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
 const path = require('path');
+const dispatcher = require('./backend/dispatcher');
 
-const port = 3000;
+const app = express();
+const PORT = 3000;
 
-const server = http.createServer((req, res) => {
-    let filePath = path.join(__dirname, 'frontend', req.url === '/' ? 'index.html' : req.url);
-    const ext = path.extname(filePath);
+app.use(express.static(path.join(__dirname, 'frontend')));
 
-    let contentType = 'text/html';
-    switch (ext) {
-        case '.js':
-            contentType = 'application/javascript';
-            break;
-        case '.css':
-            contentType = 'text/css';
-            break;
-    }
+app.use('/api', dispatcher);
 
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.writeHead(404);
-            res.end('Not Found');
-        } else {
-            res.writeHead(200, { 'Content-Type': contentType });
-            res.end(data);
-        }
-    });
-});
-
-server.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server listening on http://localhost:${PORT}`);
 });
