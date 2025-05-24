@@ -5,8 +5,8 @@ const dispatcher = require('./backend/dispatcher');
 const app = express();
 const PORT = 3000;
 
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'frontend')));
-
 app.use('/api', dispatcher);
 
 app.listen(PORT, () => {
