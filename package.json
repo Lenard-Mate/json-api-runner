@@ -1,0 +1,20 @@
+{
+  "name": "json-api-runner",
+  "version": "1.0.0",
+  "description": "TBD",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
