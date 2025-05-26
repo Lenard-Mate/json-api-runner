@@ -4,15 +4,50 @@
     <meta charset="UTF-8">
     <title>JSON API RUNNER</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<button id="theme">Theme</button>
-<button id="run">Run</button>
-<button id="align">Align</button>
-<select id="apiSelector"></select>
-<textarea id="json"></textarea>
-<pre></pre>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/icons/bootstrap-icons.css">
 
+    <link href="/prismjs/themes/prism-okaidia.css" rel="stylesheet"/>
+</head>
+<body data-bs-theme="light">
+
+<div class="controls">
+    <div class="small-button-group">
+        <button id="theme" class="btn btn-light" onclick="changeTheme()"><i class="bi bi-cloud-moon"></i> Toggle Theme
+        </button>
+
+        <button type="button" class="btn btn-secondary">Toggle Align <i class="bi bi-align-end"></i></button>
+        <div class="adjust-select-box">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+        </div>
+        <button type="button" class="btn btn-success">Run <i class="bi bi-play-circle"></i></button>
+    </div>
+</div>
+<div class="json-area">
+    <div class="form-group adjust-textarea">
+        <label for="jsonTextArea">Edit your json</label>
+        <textarea class="form-control adjust-height" id="jsonTextArea" rows="15"></textarea>
+    </div>
+
+    <div class="">
+        <label for="responseArea">Response</label>
+        <pre id="responseArea" class="adjust-response-area "><code class="language-javascript">
+
+      </code>
+       </pre>
+    </div>
+</div>
+
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="main.js"></script>
+<script src="/prismjs/prism.js"></script>
+
 </body>
 </html>
