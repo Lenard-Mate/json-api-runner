@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^9.8.0",
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.13.1",
     "cors": "^2.8.5",
