@@ -1,0 +1,36 @@
+.json-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px;
+}
+.adjust-textarea{
+    width: 30%;
+}
+.adjust-response-area{
+    width: 100%;
+    min-width: 600px;
+    height: 400px;
+    margin: 0 !important;
+}
+.adjust-select-box{
+    max-width: 200px;
+}
+.controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+.small-button-group{
+    min-width: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.adjust-height{
+    height: 400px;
+}
