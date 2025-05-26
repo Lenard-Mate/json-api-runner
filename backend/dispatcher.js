@@ -12,9 +12,14 @@ router.get('/getUserProfile', async (req, res) => {
 });
 
 router.get('/getImageByName', async (req, res) => {
-    const image = await imageService.getImageByName(req.query.name);
+    const image = await imageService.getImageByName(String(req.query.name));
     log('info', `GET /getImageByName - We have image - Success`);
-    res.json(image);
+    try {
+        res.setHeader('Content-Type', 'image/png');
+        res.send(image);
+    } catch (error) {
+        res.status(404).send(error.message || 'Image not found');
+    }
 });
 
 router.get('/getFibonacci', async (req, res) => {
