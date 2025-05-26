@@ -1,8 +1,21 @@
 const express = require('express');
 const mathService = require('./apis/mathService');
+const userService = require('./apis/userService');
+const imageService = require('./apis/imageService');
 const {log} = require("./logger");
 const router = express.Router();
 
+router.get('/getUserProfile', async (req, res) => {
+    const userData = await userService.getUserProfile(req.query.email);
+    log('info', `GET /getUserProfile - userData=${userData.email} - Success`);
+    res.json(userData);
+});
+
+router.get('/getImageByName', async (req, res) => {
+    const image = await imageService.getImageByName(req.query.name);
+    log('info', `GET /getImageByName - We have image - Success`);
+    res.json(image);
+});
 
 router.get('/getFibonacci', async (req, res) => {
     const fibonacci = await mathService.getFibonacci(req.query.n);
