@@ -11,12 +11,17 @@ async function getUserProfile(email) {
         avatar: faker.image.avatar(),
     };
     const existingUser = users.find(user => user.email === mockUser.email);
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
     if (!existingUser) {
         users.push(mockUser);
         return mockUser;
     } else {
         return existingUser;
     }
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports = {getUserProfile,users};

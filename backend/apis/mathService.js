@@ -7,7 +7,7 @@ async function getFibonacci(n) {
     for (let i = 2; i <= n; i++) {
         fib[i] = fib[i - 1] + fib[i - 2];
     }
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
     return fib[n];
 }
 
@@ -37,7 +37,7 @@ async function multiplyMatrices(matrixA, matrixB) {
             }
         }
     }
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
     return result;
 }
 
