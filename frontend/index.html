@@ -7,26 +7,31 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/icons/bootstrap-icons.css">
 
-    <link href="/prismjs/themes/prism-okaidia.css" rel="stylesheet"/>
+    <link id="prismTheme" href="/prismjs/themes/prism.css" rel="stylesheet"/>
 </head>
 <body data-bs-theme="light">
 
-<div class="controls">
+<div class="controls align-start">
     <div class="small-button-group">
-        <button id="theme" class="btn btn-light" onclick="changeTheme()"><i class="bi bi-cloud-moon"></i> Toggle Theme
+        <button id="themeButton" class="btn btn-light" onclick="changeTheme()"> Toggle Theme <i id="themeIcon" class="bi bi-cloud-moon"></i>
         </button>
 
-        <button type="button" class="btn btn-secondary">Toggle Align <i class="bi bi-align-end"></i></button>
+        <button type="button" class="btn btn-secondary" onclick="toggleAlign()">Toggle Align <i id="alignIcon" class="bi bi-align-end"></i></button>
         <div class="adjust-select-box">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <select id="apiSelector" class="form-select" aria-label="Default select example">
+                <option selected value="dispatchTasks">dispatchTasks</option>
+                <option value="getFibonacci">getFibonacci</option>
+                <option value="multiplyMatrices">multiplyMatrices</option>
+                <option value="getImageByName">getImageByName</option>
+                <option value="getUserProfile">getUserProfile</option>
             </select>
 
         </div>
-        <button type="button" class="btn btn-success">Run <i class="bi bi-play-circle"></i></button>
+        <button type="button" id="runButton" class="btn btn-success run-adjust-size" onclick="callSelectedAPI()">Run <i class="bi bi-play-circle"></i></button>
+        <button id="loadingButton" class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="sr-only">Loading...</span>
+        </button>
     </div>
 </div>
 <div class="json-area">
@@ -35,8 +40,8 @@
         <textarea class="form-control adjust-height" id="jsonTextArea" rows="15"></textarea>
     </div>
 
-    <div class="">
-        <label for="responseArea">Response</label>
+    <div class="form-group adjust-textarea">
+        <label for="responseArea">Your response</label>
         <pre id="responseArea" class="adjust-response-area "><code class="language-javascript">
 
       </code>

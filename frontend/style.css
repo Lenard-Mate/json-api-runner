@@ -1,36 +1,111 @@
-.json-area{
+body {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.controls {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: flex-end;
     padding: 20px;
+    background-color: var(--bs-tertiary-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
-.adjust-textarea{
-    width: 30%;
+
+.controls.align-start {
+    justify-content: flex-start;
 }
-.adjust-response-area{
-    width: 100%;
-    min-width: 600px;
-    height: 400px;
-    margin: 0 !important;
+
+.controls.align-end {
+    justify-content: flex-end;
 }
-.adjust-select-box{
-    max-width: 200px;
-}
-.controls{
+
+.small-button-group {
     display: flex;
-    flex-direction: row;
-    justify-content: start;
+    gap: 10px;
+    flex-wrap: wrap;
     align-items: center;
-    padding: 20px;
-    width: 100%;
 }
-.small-button-group{
-    min-width: 600px;
+
+.adjust-select-box select {
+    min-width: 200px;
+    max-width: 500px;
+}
+.run-adjust-size{
+    width: 114px;
+}
+.json-area {
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 30px;
+    background-color: var(--bs-body-bg);
 }
-.adjust-height{
+
+.adjust-textarea,
+.adjust-response-area {
+    flex: 1 1 45%;
+    max-width: 550px;
+    margin-right: 100px;
+    background-color: var(--bs-tertiary-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.adjust-textarea label,
+.adjust-response-area label {
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.adjust-textarea textarea {
     height: 400px;
+    resize: vertical;
+    border-radius: 8px;
+}
+
+.adjust-response-area {
+    height: auto;
+    min-width: 600px;
+    max-width: 100%;
+}
+
+pre#responseArea {
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    height: 400px;
+}
+
+
+    .json-area {
+        flex-direction: column;
+    }
+
+    .adjust-textarea,
+    .adjust-response-area {
+        flex: 1 1 100%;
+        min-width: 100%;
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    .adjust-response-area {
+        min-width: unset;
+    }
+#loadingButton {
+    display: none;
+}
+.do-not-show {
+    opacity: 0;
 }

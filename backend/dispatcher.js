@@ -25,7 +25,8 @@ router.get('/getImageByName', async (req, res) => {
 router.get('/getFibonacci', async (req, res) => {
     const fibonacci = await mathService.getFibonacci(req.query.n);
     log('info', `GET /getFibonacci - n=${req.query.n} - Success`);
-    res.json(fibonacci);
+    const responseValue = {"fibonacci":fibonacci}
+    res.json(responseValue);
 });
 
 router.post('/multiplyMatrices', async (req, res) => {
