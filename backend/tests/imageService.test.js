@@ -2,11 +2,9 @@ const path = require('path');
 const fs = require('fs/promises');
 const { getImageByName } = require('../apis/imageService');
 
-
 jest.mock('fs/promises');
 
 describe('getImageByName', () => {
-
     const validImageName = 'test-image.png';
     const invalidExtensionImage = 'test-image.jpg';
     const noExtensionImage = 'test-image';
@@ -47,15 +45,14 @@ describe('getImageByName', () => {
         expect(fs.readFile).not.toHaveBeenCalled();
     });
 
-    test('should handle file not found error', async () => {
+    test('should return "Image not found" string when file does not exist', async () => {
         fs.access.mockRejectedValue(new Error('File not found'));
 
-        await expect(getImageByName(validImageName))
-            .rejects
-            .toThrow('File not found');
+        const result = await getImageByName(validImageName);
 
         expect(fs.access).toHaveBeenCalledTimes(1);
         expect(fs.readFile).not.toHaveBeenCalled();
+        expect(result).toBe('Image not found');
     });
 
     test('should sanitize path traversal attempts', async () => {
@@ -65,9 +62,12 @@ describe('getImageByName', () => {
 
         await getImageByName(maliciousPath);
 
-        const expectedPath = expect.stringContaining('passwd.png');
-        const unexpectedPath = expect.not.stringContaining('../');
-        expect(fs.access).toHaveBeenCalledWith(expectedPath);
-        expect(fs.access).toHaveBeenCalledWith(unexpectedPath);
+        const calledPath = fs.access.mock.calls[0][0];
+        expect(calledPath).toEqual(expect.stringContaining('passwd.png'));
+        expect(calledPath).not.toMatch(/\.\./);
+
+        const readPath = fs.readFile.mock.calls[0][0];
+        expect(readPath).toEqual(expect.stringContaining('passwd.png'));
+        expect(readPath).not.toMatch(/\.\./);
     });
 });

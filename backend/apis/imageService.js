@@ -15,9 +15,12 @@ async function getImageByName(name) {
         throw new Error('Invalid file extension');
     }
 
-    await fs.access(imagePath);
-
-    return await fs.readFile(imagePath);
+    try {
+        await fs.access(imagePath);
+        return await fs.readFile(imagePath);
+    } catch (err) {
+        return 'Image not found';
+    }
 }
 
 module.exports = { getImageByName };

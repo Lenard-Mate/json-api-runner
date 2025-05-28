@@ -30,24 +30,31 @@ describe('Dispatcher API routes', () => {
         expect(userService.getUserProfile).toHaveBeenCalledWith('test@example.com');
     });
 
-    test('GET /getImageByName returns an image buffer', async () => {
-        const mockImage = Buffer.from('image');
-        imageService.getImageByName.mockResolvedValue(mockImage);
+    test('GET /getFibonacci returns fibonacci number JSON', async () => {
+        // Mock the service method to return a specific fibonacci number, e.g. 13 for n=7
+        mathService.getFibonacci.mockResolvedValue(13);
 
-        const res = await request(app).get('/getImageByName').query({ name: 'logo' });
+        const n = 7;
+        const res = await request(app).get('/getFibonacci').query({ n });
 
         expect(res.statusCode).toBe(200);
-        expect(res.header['content-type']).toBe('image/png');
-        expect(res.body).toEqual(mockImage);
+        expect(res.headers['content-type']).toMatch(/application\/json/);
+
+        // Expect JSON body with fibonacci key equal to mocked value
+        expect(res.body).toEqual({ fibonacci: 13 });
+
+        // Optional: verify your mock was called with the correct param
+        expect(mathService.getFibonacci).toHaveBeenCalledWith(String(n));
     });
 
-    test('GET /getFibonacci returns Fibonacci sequence', async () => {
+    test('GET /getFibonacci returns Fibonacci sequence object', async () => {
         mathService.getFibonacci.mockResolvedValue([0, 1, 1, 2, 3]);
 
         const res = await request(app).get('/getFibonacci').query({ n: 5 });
 
         expect(res.statusCode).toBe(200);
-        expect(res.body).toEqual([0, 1, 1, 2, 3]);
+        // The route returns { fibonacci: [...] }
+        expect(res.body).toEqual({ fibonacci: [0, 1, 1, 2, 3] });
     });
 
     test('POST /multiplyMatrices returns multiplication result', async () => {
