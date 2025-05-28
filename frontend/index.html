@@ -13,10 +13,13 @@
 
 <div class="controls align-start">
     <div class="small-button-group">
-        <button id="themeButton" class="btn btn-light" onclick="changeTheme()"> Toggle Theme <i id="themeIcon" class="bi bi-cloud-moon"></i>
+        <button id="themeButton" class="btn btn-light" onclick="changeTheme()"> Toggle Theme <i id="themeIcon"
+                                                                                                class="bi bi-cloud-moon"></i>
         </button>
 
-        <button type="button" class="btn btn-secondary" onclick="toggleAlign()">Toggle Align <i id="alignIcon" class="bi bi-align-end"></i></button>
+        <button type="button" class="btn btn-secondary" onclick="toggleAlign()">Toggle Align <i id="alignIcon"
+                                                                                                class="bi bi-align-end"></i>
+        </button>
         <div class="adjust-select-box">
             <select id="apiSelector" class="form-select" aria-label="Default select example">
                 <option selected value="dispatchTasks">dispatchTasks</option>
@@ -27,7 +30,8 @@
             </select>
 
         </div>
-        <button type="button" id="runButton" class="btn btn-success run-adjust-size" onclick="callSelectedAPI()">Run <i class="bi bi-play-circle"></i></button>
+        <button type="button" id="runButton" class="btn btn-success run-adjust-size" onclick="callSelectedAPI()">Run <i
+                class="bi bi-play-circle"></i></button>
         <button id="loadingButton" class="btn btn-primary" type="button" disabled>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             <span class="sr-only">Loading...</span>
@@ -42,6 +46,11 @@
 
     <div class="form-group adjust-textarea">
         <label for="responseArea">Your response</label>
+        <div id="loadingSpinner" class="spinner-container">
+        <div class="spinner-border text-primary" role="status">
+
+        </div>
+        </div>
         <pre id="responseArea" class="adjust-response-area "><code class="language-javascript">
 
       </code>

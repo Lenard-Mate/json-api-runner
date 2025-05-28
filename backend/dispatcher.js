@@ -12,13 +12,19 @@ router.get('/getUserProfile', async (req, res) => {
 });
 
 router.get('/getImageByName', async (req, res) => {
-    const image = await imageService.getImageByName(String(req.query.name));
-    log('info', `GET /getImageByName - We have image - Success`);
     try {
-        res.setHeader('Content-Type', 'image/png');
-        res.send(image);
+        const image = await imageService.getImageByName(String(req.query.name));
+        if (typeof image === 'string') {
+            log('warn', `GET /getImageByName - Image not found: ${req.query.name}`);
+            return res.status(404).json({ error: image });
+        }
+
+        const base64Image = image.toString('base64');
+        log('info', `GET /getImageByName - We have image - Success`);
+        return res.json({ image: base64Image, contentType: 'image/png' });
     } catch (error) {
-        res.status(404).send(error.message || 'Image not found');
+        log('error', `GET /getImageByName - Error: ${error.message}`);
+        res.status(500).json({ error: 'Server error' });
     }
 });
 

@@ -37,6 +37,7 @@ async function getFibonacci(n) {
         loadingIsDisabled();
         displayResponse(data);
     } catch (err) {
+        loadingIsDisabled();
         displayError(err);
     }
 }
@@ -49,6 +50,7 @@ async function getUserProfile(email) {
         loadingIsDisabled();
         displayResponse(data);
     } catch (err) {
+        loadingIsDisabled();
         displayError(err);
     }
 }
@@ -56,12 +58,21 @@ async function getUserProfile(email) {
 async function getImageByName(name) {
     try {
         const res = await fetch(`${BASE_URL}/getImageByName?name=${encodeURIComponent(name)}`);
-        if (!res.ok) throw new Error('Failed to fetch image');
-        const blob = await res.blob();
-        const base64 = await blobToBase64(blob);
+
+        if (!res.ok) {
+            const errorData = await res.json().catch(() => null);
+            throw new Error(errorData?.error || 'Failed to fetch image');
+        }
+        const data = await res.json();
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
         loadingIsDisabled();
-        displayResponse({ imageBase64: base64 });
+        displayResponse({ imageBase64: `data:image/png;base64,${data.image}` });
+
     } catch (err) {
+        loadingIsDisabled();
         displayError(err);
     }
 }
@@ -90,6 +101,7 @@ async function multiplyMatrices(matrixA, matrixB) {
         loadingIsDisabled();
         displayResponse(data);
     } catch (err) {
+        loadingIsDisabled();
         displayError(err);
     }
 }
@@ -109,6 +121,7 @@ async function dispatchTasks({ fibonacci = {}, multiplyMatrices = {}, imageByNam
         loadingIsDisabled();
         displayResponse(data);
     } catch (err) {
+        loadingIsDisabled();
         displayError(err);
     }
 }
@@ -116,6 +129,7 @@ async function dispatchTasks({ fibonacci = {}, multiplyMatrices = {}, imageByNam
 function callSelectedAPI() {
     const selectedValue = document.getElementById('apiSelector').value;
     if (document.getElementById('jsonTextArea').value !== ''){
+        try {
         const textAreaValue = JSON.parse(document.getElementById('jsonTextArea').value);
         loadingIsEnabled();
 
@@ -129,9 +143,8 @@ function callSelectedAPI() {
                 break;
 
             case 'getImageByName':
-                getImageByName(textAreaValu.name);
+                getImageByName(textAreaValue.name);
                 break;
-
             case 'multiplyMatrices':
                 multiplyMatrices(textAreaValue.matrixA, textAreaValue.matrixB);
                 break;
@@ -151,6 +164,11 @@ function callSelectedAPI() {
             default:
                 displayError(new Error('Invalid API selection'));
         }
+    }catch (err){
+            loadingIsDisabled();
+            displayError(new Error('Problem with the JSON format'));
+
+    }
     }else{
         displayError(new Error('Please enter JSON data'));
     }
@@ -174,8 +192,33 @@ function toggleAlign() {
 function loadingIsEnabled(){
     document.getElementById('runButton').style.display = 'none';
     document.getElementById('loadingButton').style.display = 'initial';
+    document.getElementById('loadingSpinner').style.display = 'flex';
 }
 function loadingIsDisabled(){
     document.getElementById('runButton').style.display = 'initial';
     document.getElementById('loadingButton').style.display = 'none';
+    document.getElementById('loadingSpinner').style.display = 'none';
 }
+window.onload = function () {
+    selectedJson();
+};
+
+function selectedJson(){
+    fetch(`demo-data/${document.getElementById("apiSelector").value}.json`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById("jsonTextArea").value = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            console.error('Error loading JSON:', error);
+        });
+}
+
+document.getElementById('apiSelector').addEventListener('change', function () {
+    selectedJson();
+});
